@@ -1,0 +1,90 @@
+---
+title: "Analisa properti Sydney and Melbourne"
+author: "ashari juang"
+date: "9/27/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+# library
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+
+
+# import data
+ds <- read.csv("data.csv", na.strings=c("NA","NaN", ""))
+
+# buang data yang belum terjual
+ds <- ds %>%
+  dplyr::filter(ds$price > 0)
+
+# convert price to int, karena ada yang decimal
+ds$price <- as.integer(ds$price)
+ds$date <- gsub(x=ds$date,pattern=" 00:00:00",replacement="",fixed=T)
+ds$date <- as.Date(ds$date, format("%Y-%m-%d"))
+```
+
+## Contex
+
+Real estate market selalu menarik
+Berikut adalah data property di sydney dan melbourne diambil dari kagle
+https://www.kaggle.com/shree1992/housedata/downloads/housedata.zip/2
+
+Prediksi harga properti menarik untuk di analisa. Harga properti adalah indikator yang baik untuk kondisi pasar secara keseluruhan dan kesehatan ekonomi suatu negara.
+
+```{r}
+summary(ds)
+```
+
+## EDA
+
+Ploting data untuk melihat pola menarik, karena berat kl harus plot semua variable maka kita pilih yang mungkin ada hubungannya.
+misal: harga, jumlah kamar, tanggal, kondisi, kota, negara
+```{r}
+eda <- ds %>%
+  dplyr::select(date, price, bedrooms, condition, city, country)
+
+plot(eda)
+```
+
+## Analisa Penjualan
+
+per hari
+```{r}
+ggplot(eda, mapping = aes(date)) +
+  geom_bar()
+```
+
+
+## Analisa harga
+
+harga ada gap terlalu tinggi
+```{r}
+ggplot(ds, mapping = aes(y=ds$price)) +
+  geom_boxplot()
+```
+
+
+
+## Apakah kondisi mempengaruhi harga jual?
+
+column condition 1-5 
+
+yang paling banyak terjual dengan kondisi 3
+```{r}
+ggplot(eda) +
+  geom_bar(mapping = aes(eda$condition))
+```
+
+```{r}
+ggplot(eda) +
+  geom_point(mapping = aes(x=price, y= condition))
+```
+
+```{r}
+ggplot(eda) +
+  geom_histogram(mapping = aes(price), bins = 10, b)
+```
+
