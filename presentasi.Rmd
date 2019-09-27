@@ -40,7 +40,7 @@ juli <- ds %>%
 
 ## Contex
 
-Berikut adalah data property di sydney dan melbourne diambil dari kagle
+Berikut adalah data property diambil dari kagle
 https://www.kaggle.com/shree1992/housedata
 
 Prediksi harga properti menarik untuk di analisa. Harga properti adalah indikator yang baik untuk kondisi pasar secara keseluruhan dan kesehatan ekonomi suatu negara.
@@ -131,6 +131,6 @@ ggplot(eda, mapping = aes(condition, bedrooms)) +
 ## Kesimpulan
 
 - Penjualan terbanyak terdapat pada hari ... tiap minggu, jadi bisa menambahkah sales.
-- Kota paling banyak penjualan 
+- Kota paling banyak penjualan Seatle
 - Untuk developer sebaiknya membangun dengan spesifikasi bedroom kondisi 3 dan kamar antara 3-4.
 
