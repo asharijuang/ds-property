@@ -24,6 +24,15 @@ ds <- ds %>%
 ds$price <- as.integer(ds$price)
 ds$date <- gsub(x=ds$date,pattern=" 00:00:00",replacement="",fixed=T)
 ds$date <- as.Date(ds$date, format("%Y-%m-%d"))
+
+mei <- eda %>%
+  dplyr::filter(eda$date > "2014-05-01" & eda$date < "2014-06-01")
+
+juni <- eda %>%
+  dplyr::filter(eda$date > "2014-06-01" & eda$date < "2014-07-01")
+
+juli <- eda %>%
+  dplyr::filter(eda$date > "2014-07-01" & eda$date < "2014-08-01")
 ```
 
 ## Contex
@@ -49,21 +58,50 @@ eda <- ds %>%
 plot(eda)
 ```
 
-## Analisa Penjualan
+## 1. Analisa Penjualan
 
-per hari
+per bulan
 ```{r}
-ggplot(eda, mapping = aes(date)) +
-  geom_bar()
+ggplot(mei, mapping = aes(date)) +
+  geom_bar() +
+  labs(title="Penjualana Mei")
+```
+per bulan
+```{r}
+ggplot(juni, mapping = aes(date)) +
+  geom_bar() +
+  labs(title="Penjualana Juni")
 ```
 
+per bulan
+```{r}
+ggplot(juli, mapping = aes(date)) +
+  geom_bar() +
+  labs(title="Penjualana Juli")
+```
+
+Penjualan per kota
+
+```{r}
+ggplot(ds) +
+  geom_point(mapping = aes(city,date, color = condition)) +
+  coord_flip()
+```
 
 ## Analisa harga
 
 harga ada gap terlalu tinggi
 ```{r}
-ggplot(ds, mapping = aes(y=ds$price)) +
-  geom_boxplot()
+ggplot(mei, mapping = aes(y=price)) +
+  geom_boxplot() +
+  labs(title = "Distibusi harga mei")
+```
+
+juni
+```{r}
+ggplot(juni, mapping = aes(y=price)) +
+  geom_boxplot() +
+  labs(title = "Distibusi harga juni")
 ```
 
 
@@ -73,18 +111,14 @@ ggplot(ds, mapping = aes(y=ds$price)) +
 column condition 1-5 
 
 yang paling banyak terjual dengan kondisi 3
+Rumah 
 ```{r}
 ggplot(eda) +
   geom_bar(mapping = aes(eda$condition))
 ```
 
 ```{r}
-ggplot(eda) +
-  geom_point(mapping = aes(x=price, y= condition))
-```
 
-```{r}
-ggplot(eda) +
-  geom_histogram(mapping = aes(price), bins = 10, b)
+ggplot(eda, mapping = aes(x=price)) +
+  geom_histogram()
 ```
-
