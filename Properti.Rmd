@@ -69,8 +69,8 @@ ggplot(mei, mapping = aes(date)) +
 per bulan
 ```{r}
 ggplot(juni, mapping = aes(date)) +
-  geom_bar() +
-  labs(title="Penjualana Juni")
+  geom_bar(aes(fill = juni$bedrooms), position = "dodge", stat = "count") +
+  labs(title="Penjualan Juni", x="Date", y="jumlah")
 ```
 
 per bulan
@@ -130,4 +130,13 @@ ggplot(eda, mapping = aes(condition, bedrooms)) +
 ```
 
 Harga dan jumlah kamar
+
+```{r}
+
+minggu <- mei %>%
+  head(30)
+
+ggplot(mei, aes(price,city, color = condition)) +
+  geom_point()
+```
 
