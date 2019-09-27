@@ -117,8 +117,17 @@ ggplot(eda) +
   geom_bar(mapping = aes(eda$condition))
 ```
 
-```{r}
+Hubungan antara bedroom dan condition
 
-ggplot(eda, mapping = aes(x=price)) +
-  geom_histogram()
+# Spesifikasi properti yang paling laku 
+Paling banyak laku kondisi 3 dan kamar antara 3-4.
+
+
+```{r}
+ggplot(eda, mapping = aes(condition, bedrooms)) +
+  geom_point() +
+  geom_count()
 ```
+
+Harga dan jumlah kamar
+

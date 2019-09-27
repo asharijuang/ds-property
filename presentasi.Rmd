@@ -1,0 +1,99 @@
+---
+title: "Real estate market  in USA"
+author: "Ashari Juang dan Reki"
+date: "9/27/2019"
+output:
+  slidy_presentation: default
+  ioslides_presentation: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+# library
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+
+
+# import data
+ds <- read.csv("data.csv", na.strings=c("NA","NaN", ""))
+
+# buang data yang belum terjual
+ds <- ds %>%
+  dplyr::filter(ds$price > 0)
+
+# convert price to int, karena ada yang decimal
+ds$price <- as.integer(ds$price)
+ds$date <- gsub(x=ds$date,pattern=" 00:00:00",replacement="",fixed=T)
+ds$date <- as.Date(ds$date, format("%Y-%m-%d"))
+
+mei <- ds %>%
+  dplyr::filter(ds$date > "2014-05-01" & ds$date < "2014-06-01")
+
+juni <- ds %>%
+  dplyr::filter(ds$date > "2014-06-01" & ds$date < "2014-07-01")
+
+juli <- ds %>%
+  dplyr::filter(ds$date > "2014-07-01" & ds$date < "2014-08-01")
+```
+
+## Contex
+
+Berikut adalah data property di sydney dan melbourne diambil dari kagle
+https://www.kaggle.com/shree1992/housedata
+
+Prediksi harga properti menarik untuk di analisa. Harga properti adalah indikator yang baik untuk kondisi pasar secara keseluruhan dan kesehatan ekonomi suatu negara.
+
+## Slide with Bullets
+
+- EDA analisa hubungan antara variable
+- Analisa Penjualan
+- Analisa Spesifikasi Property
+- Analisa Harga
+- Saran untuk marketing dan developer
+
+## EDA analisa hubungan antara variable
+
+```{r, echo = TRUE}
+eda <- ds %>%
+  dplyr::select(date, price, bedrooms, condition, city)
+
+plot(eda)
+```
+
+
+## Analisa Penjualan 2014
+
+Penjualan Mei hingga pertengahan juli
+```{r, echo = TRUE}
+ggplot(eda, mapping = aes(date)) +
+  geom_bar() +
+  labs(title="Penjualan Mei - Juli")
+```
+
+Penjualan Mei 2014
+```{r, echo = TRUE}
+ggplot(mei, mapping = aes(date)) +
+  geom_bar() +
+  labs(title="Penjualan Mei")
+```
+
+## Analisa Spesifikasi Property
+
+Apakah spesifikasi/kondisi properti mempengaruhi jumlah penjualan.
+```{r}
+ggplot(eda) +
+  geom_bar(mapping = aes(condition)) +
+  labs(title="Kondisi properti")
+```
+
+Kondisi properti dan jumlah kamar, dan dampak terhadap jumlah penjualan.
+Paling banyak laku kondisi 3 dan kamar antara 3-4.
+```{r}
+ggplot(eda, mapping = aes(condition, bedrooms)) +
+  geom_point() +
+  geom_count() +
+  labs(title="Spesifikasi yang paling banyak laku ")
+```
+
