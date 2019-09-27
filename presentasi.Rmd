@@ -14,6 +14,7 @@ knitr::opts_chunk$set(echo = FALSE)
 library(tidyverse)
 library(dplyr)
 library(ggplot2)
+library(lubridate)
 
 
 # import data
@@ -73,12 +74,43 @@ ggplot(eda, mapping = aes(date)) +
   labs(title="Penjualan Mei - Juli")
 ```
 
+## Analisa Penjualan 2014
+
 Penjualan Mei 2014
 ```{r, echo = TRUE}
 ggplot(mei, mapping = aes(date)) +
   geom_bar() +
   labs(title="Penjualan Mei")
 ```
+
+## Analisa Penjualan 2014
+
+Grafik Penjualan berdasarkan minggu pada Mei 2014
+
+```{r}
+toWeek = mei %>%
+  mutate(week = ceiling(day(date) / 7) )
+
+ggplot(toWeek, mapping = aes(week)) +
+  geom_bar() + scale_x_continuous(name = "minggu") + scale_y_continuous(name = "jumlah") +
+  labs(title="Penjualan Mei Dalam Minggu")
+```
+
+## Analisa Penjualan 2014
+
+Grafik Penjualan berdasarkan hari pada minggu ke 3 di Mei 2014 
+
+```{r}
+toDay = toWeek %>%
+  filter(week == 3)
+
+
+ggplot(toDay, mapping = aes(date)) +
+  geom_bar() +
+  labs(title="Penjualan Mei Dalam Hari")
+```
+
+## Analisa Penjualan 2014
 
 Penjualan Juni 2014
 ```{r, echo = TRUE}
@@ -87,12 +119,65 @@ ggplot(juni, aes(date)) +
   labs(title="Penjualan Juni", x="Date", y="jumlah")
 ```
 
-Penjualan Juni 2014
-```{r, echo = TRUE}
-ggplot(juni, mapping = aes(date)) +
-  geom_bar(aes(fill = condition), position = "identity", stat = "count") +
-  labs(title="Penjualan Juni")
+## Analisa Penjualan 2014
+
+Grafik Penjualan berdasarkan minggu pada Juni 2014
+```{r}
+toWeek = juni %>%
+  mutate(week = ceiling(day(date) / 7) )
+
+ggplot(toWeek, mapping = aes(week)) +
+  geom_bar() + scale_x_continuous(name = "minggu") + scale_y_continuous(name = "jumlah") +
+  labs(title="Penjualan Juni Dalam Minggu")
 ```
+
+## Analisa Penjualan 2014
+
+Grafik Penjualan berdasarkan hari pada minggu ke 4 di Juni 2014 
+```{r}
+toDay = toWeek %>%
+  filter(week == 4)
+
+
+ggplot(toDay, mapping = aes(date)) +
+  geom_bar() +
+  labs(title="Penjualan Juni Dalam Hari")
+```
+
+## Analisa Penjualan 2014
+
+Penjualan Juli 2014
+```{r, echo = TRUE}
+ggplot(juli, mapping = aes(date)) +
+  geom_bar(aes(fill = condition), position = "identity", stat = "count") +
+  labs(title="Penjualan Juli")
+```
+
+## Analisa Penjualan 2014
+
+Grafik Penjualan berdasarkan minggu pada Juli 2014
+```{r}
+toWeek = juli %>%
+  mutate(week = ceiling(day(date) / 7) )
+
+ggplot(toWeek, mapping = aes(week)) +
+  geom_bar() + scale_x_continuous(name = "minggu") + scale_y_continuous(name = "jumlah") +
+  labs(title="Penjualan Juli Dalam Minggu")
+```
+
+## Analisa Penjualan 2014
+
+Grafik Penjualan berdasarkan hari pada minggu ke 2 di Juli 2014 
+```{r}
+toDay = toWeek %>%
+  filter(week == 2)
+
+
+ggplot(toDay, mapping = aes(date)) +
+  geom_bar() +
+  labs(title="Penjualan Juli Dalam Hari")
+```
+
 
 ## Analisa Lokasi
 
