@@ -2,7 +2,7 @@
 title: "Analisa properti Sydney and Melbourne"
 author: "ashari juang"
 date: "9/27/2019"
-output: html_document
+output: html_document 
 ---
 
 ```{r setup, include=FALSE}
